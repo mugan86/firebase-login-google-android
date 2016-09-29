@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_main);
 
         // Views
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.d(TAG, "**********************************************************");
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart()");
         mAuth.addAuthStateListener(mAuthListener);
     }
     // [END on_start_add_listener]
@@ -111,15 +115,25 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop()");
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
     // [END on_stop_remove_listener]
 
+    // [START on_stop_remove_listener]
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
+    }
+    // [END on_stop_remove_listener]
+
     // [START onactivityresult]
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult()");
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -172,12 +186,14 @@ public class MainActivity extends AppCompatActivity implements
 
     // [START signin]
     private void signIn() {
+        Log.d(TAG, "signIn()");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     // [END signin]
 
     private void signOut() {
+        Log.d(TAG, "signOut()");
         // Firebase sign out
         mAuth.signOut();
 
@@ -192,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void revokeAccess() {
+        Log.d(TAG, "revokeAccess()");
         // Firebase sign out
         mAuth.signOut();
 
@@ -206,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
+        Log.d(TAG, "updateUI()");
         //hideProgressDialog();
         if (user != null) {
             mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
