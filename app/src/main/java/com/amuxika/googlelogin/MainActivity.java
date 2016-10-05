@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_main);
 
+        String pass = "2016-10-05 10:34:00";
+
+        System.out.println("UPDATE? " + UpdateDataManage.isPassOneHour(pass));
+
+
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
         mDetailTextView = (TextView) findViewById(R.id.detail);
